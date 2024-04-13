@@ -1,0 +1,7 @@
+llm-model/
+.idea/
+volumes/
+QANY_DB/
+node_modules/
+src/
+__pycache__/
