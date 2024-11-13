@@ -25,7 +25,7 @@ class UnstructuredPaddlePDFLoader(UnstructuredFileLoader):
         super().__init__(file_path=file_path, mode=mode, **unstructured_kwargs)
 
     def _get_elements(self) -> List:
-        def pdf_ocr_txt(filepath, dir_path="tmp_files"):
+        def pdf__txt(filepath, dir_path="tmp_files"):
             full_dir_path = os.path.join(os.path.dirname(filepath), dir_path)
             if not os.path.exists(full_dir_path):
                 os.makedirs(full_dir_path)
@@ -47,6 +47,23 @@ class UnstructuredPaddlePDFLoader(UnstructuredFileLoader):
             if os.path.exists(img_name):
                 os.remove(img_name)
             return txt_file_path
+
+
+        def pdf_ocr_txt(filepath, dir_path="tmp_files"):
+            full_dir_path = os.path.join(os.path.dirname(filepath), dir_path)
+            if not os.path.exists(full_dir_path):
+                os.makedirs(full_dir_path)
+            doc = fitz.open(filepath)
+            txt_file_path = os.path.join(full_dir_path, "{}.txt".format(os.path.split(filepath)[-1]))
+            img_name = os.path.join(full_dir_path, 'tmp.png')
+            with open(txt_file_path, 'w', encoding='utf-8') as fout:
+                for i in tqdm(range(doc.page_count)):
+                    page_text = doc.get_page_text(i)
+                    fout.write(page_text)
+            if os.path.exists(img_name):
+                os.remove(img_name)
+            return txt_file_path
+
 
         txt_file_path = pdf_ocr_txt(self.file_path)
         return partition_text(filename=txt_file_path, **self.unstructured_kwargs)
