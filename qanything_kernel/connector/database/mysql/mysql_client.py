@@ -293,6 +293,23 @@ class KnowledgeBaseManager:
         return True
 
 
+    def get_kb_file_contents(self, kb_ids):
+        """获取知识库下所有文件的所有文本内容"""
+        placeholders = ','.join(['%s'] * len(kb_ids))
+        query = "select f.kb_id, c.file_id, c.content_id, c.content from Content c " + \
+                "join File f " + \
+                "on c.file_id = f.file_id " + \
+                "where f.kb_id in ({}) GROUP BY f.kb_id, c.file_id, c.content_id, c.content".format(placeholders)
+        try:
+            # TODO 分页查询
+            data = self.execute_query_(query, kb_ids, commit=False, fetch=True)
+        except Exception as e:
+            print(f"get_kb_file_contents error: {e}")
+            data = []
+        return data
+
+
+
     #  更新file中的file_size
     def update_file_size(self, file_id, file_size):
         query = "UPDATE File SET file_size = %s WHERE file_id = %s"

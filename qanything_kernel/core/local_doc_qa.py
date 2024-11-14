@@ -1,5 +1,7 @@
+import json
+
 from qanything_kernel.configs.model_config import VECTOR_SEARCH_TOP_K, CHUNK_SIZE, VECTOR_SEARCH_SCORE_THRESHOLD, \
-    PROMPT_TEMPLATE, STREAMING
+    PROMPT_TEMPLATE, STREAMING, SUM_PROMPT_TEMPLATE
 from typing import List
 from qanything_kernel.connector.embedding.embedding_for_online import Embeddings
 import time
@@ -217,10 +219,15 @@ class LocalDocQA:
             chat_history = []
         retrieval_queries = [query]
 
+        # 召回
         source_documents = self.get_source_documents(retrieval_queries, milvus_kb)
-
         deduplicated_docs = self.deduplicate_documents(source_documents)
+
+        # 排序
         retrieval_documents = sorted(deduplicated_docs, key=lambda x: x.metadata['score'], reverse=True)
+
+        # 重排
+        rerank = False
         if rerank and len(retrieval_documents) > 1:
             print(f"use rerank, rerank docs num: {len(retrieval_documents)}")
             retrieval_documents = self.rerank_documents(query, retrieval_documents)
@@ -249,3 +256,69 @@ class LocalDocQA:
             yield response, history
         t2 = time.time()
         print(f"LLM time: {t2 - t1}")
+
+
+
+    def get_raw_documents(self, kb_ids):
+        kb_file_contents = self.kb_manager.get_kb_file_contents(kb_ids)
+
+        final_docs = []  # [[para1, para2, ...], [], ...]
+        last_file = ""
+        for kb_file_content in kb_file_contents:
+            _, file_id, _, content = kb_file_content
+            if file_id == last_file:
+                final_docs[len(final_docs)-1].append(content)
+            else:
+                final_docs.append([content])
+                last_file = file_id
+
+        return final_docs
+
+
+    def summary_single_doc(self, doc: List):
+        ret = []
+        for content in doc:
+            prompt = SUM_PROMPT_TEMPLATE.replace("{context}", content)
+            output = ""
+            try:
+                for answer_result in self.llm.generatorAnswer(prompt=prompt, history=None, streaming=True):
+                    resp = answer_result.llm_output["answer"]
+                    output += json.loads(resp[6:])['answer']
+            except Exception as e:
+                print(resp)
+            ret.append(output)
+        return ret
+
+
+    def get_summary_answer(self, query, kb_ids, streaming: bool = STREAMING, rerank: bool = False):
+        source_documents = self.get_raw_documents(kb_ids)
+        print(source_documents)
+
+        for doc in source_documents:
+            summ = self.summary_single_doc(doc)
+            print(summ)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,7 +16,7 @@ from config.settings import *
 
 
 def createCollection(collection_name):
-    vector_dim = 768
+    vector_dim = 1024
     index_type = "IVF_FLAT"
     metric = "L2"
     nlist = 128

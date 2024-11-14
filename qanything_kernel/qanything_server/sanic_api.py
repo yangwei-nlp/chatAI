@@ -26,7 +26,7 @@ from sanic.worker.manager import WorkerManager
 WorkerManager.THRESHOLD = 6000
 
 
-app = Sanic("QAnything")
+app = Sanic("ChatAI")
 # 设置请求体最大为 400MB
 app.config.REQUEST_MAX_SIZE = 400 * 1024 * 1024
 

@@ -9,8 +9,8 @@ from sentence_transformers import SentenceTransformer
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
-# DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-DEVICE = 'cpu'
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+# DEVICE = 'cpu'
 
 embeding_path = "/home/qilixin/文档/new_resource_platform/model/bge-base-zh-v1.5"
 embedding_model = SentenceTransformer(embeding_path, device=DEVICE)

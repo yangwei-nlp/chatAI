@@ -85,7 +85,7 @@ def embedding_chunks(chunks):
         contents[i: i + EMBEDDING_BATCH_SIZE]
         for i in range(0, len(contents), EMBEDDING_BATCH_SIZE)
     ]
-    embeddings_list = [ollama_embedding(batch, embed_model="nomic-embed-text", host="http://localhost:11434")
+    embeddings_list = [ollama_embedding(batch, embed_model="bge-m3", host="http://localhost:11434")
                        for batch in batches]
     embeddings = np.concatenate(embeddings_list)
 

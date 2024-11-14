@@ -350,7 +350,59 @@ async def doc_summary(req: request):
                                kb_ids), "history": history, "source_documents": [{}]})
     else:
         async def generate_answer(response):
-            pass
+            print("start generate answer")
+            for resp, next_history in local_doc_qa.get_summary_answer(
+                    query=question, kb_ids=kb_ids, streaming=True, rerank=rerank
+            ):
+                chunk_data = resp["result"]
+                if not chunk_data:
+                    continue
+                chunk_str = chunk_data[6:]
+
+                if chunk_str.startswith("[DONE]"):
+                    # source_documents = []
+                    # for inum, doc in enumerate(resp["source_documents"]):
+                    #     source_info = {'file_id': doc.metadata['file_id'],
+                    #                    'file_name': doc.metadata['file_name'],
+                    #                    'content': doc.page_content,
+                    #                    'retrieval_query': doc.metadata['retrieval_query'],
+                    #                    'score': str(doc.metadata['score'])}
+                    #     source_documents.append(source_info)
+
+                    # retrieval_documents = format_source_documents(resp["retrieval_documents"])
+                    # source_documents = format_source_documents(resp["source_documents"])
+                    # chat_data = {'user_info': user_id, 'kb_ids': kb_ids, 'query': question, 'history': history,
+                    #              'prompt': resp['prompt'], 'result': next_history[-1][1],
+                    #              'retrieval_documents': retrieval_documents, 'source_documents': source_documents}
+                    # print("chat_data: %s", chat_data)
+                    # print("response: %s", chat_data['result'])
+                    stream_res = {
+                        "code": 200,
+                        "msg": "success",
+                        "question": question,
+                        # "response":next_history[-1][1],
+                        "response": "",
+                        "history": [],
+                        "source_documents": [],
+                    }
+
+                else:
+                    chunk_js = json.loads(chunk_str)
+                    delta_answer = chunk_js["answer"]
+                    stream_res = {
+                        "code": 200,
+                        "msg": "success",
+                        "question": "",
+                        "response": delta_answer,
+                        "history": [],
+                        "source_documents": [],
+                    }
+
+                await response.write(f"data: {json.dumps(stream_res, ensure_ascii=False)}\n\n")
+                if chunk_str.startswith("[DONE]"):
+                    await response.eof()
+                await asyncio.sleep(0.001)
+
 
         response_stream = ResponseStream(generate_answer, content_type='text/event-stream')
         return response_stream
