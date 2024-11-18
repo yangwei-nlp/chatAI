@@ -1,13 +1,13 @@
 from llm.query import naive_query
 from fastapi import APIRouter, File, UploadFile
 from chunk_text.embedding import ollama_embedding
-from storage import chunkCollection
+from storage import collection_dict
 
 rag_router = APIRouter()
 
 
 @rag_router.post("/naive_rag")
-async def naive_rag(query):
+async def naive_rag(query, collectionName):
     try:
         # 要进行KNN搜索的查询向量
         query_vector = ollama_embedding([query], embed_model="bge-m3", host="http://localhost:11434")
@@ -16,7 +16,8 @@ async def naive_rag(query):
         partition_names = ["your_partition_name"]
 
         # 执行KNN搜索
-        results = chunkCollection.search(
+        collection = collection_dict.get(collectionName)
+        results = collection.search(
             data=query_vector,                                              # 查询数据
             anns_field="embedding",                                         # 向量字段名
             param={"metric_type": "L2", "params": {"nprobe": 10}},          # 搜索参数

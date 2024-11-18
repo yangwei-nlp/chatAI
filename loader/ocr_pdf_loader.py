@@ -14,6 +14,9 @@ ocr_model = model_manager.get_model(True, False)
 
 
 def read_pdf(pdf_path):
+    """
+    读取pdf文件返回纯文本
+    """
     pdf_bytes = open(pdf_path, "rb").read()
 
     model_json = doc_analyze(pdf_bytes, ocr=True, start_page_id=0, end_page_id=None)

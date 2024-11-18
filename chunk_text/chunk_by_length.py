@@ -44,7 +44,7 @@ def chunking_by_token_size(
     return results
 
 
-def make_inserting_chunks(content, ):
+def make_inserting_chunks(content, file_path, file_create_time):
     """准备需要存储的文本块数据"""
     chunks = chunking_by_token_size(content, overlap_token_size=100, max_token_size=500, tiktoken_model="gpt-4o")
     new_docs = {
@@ -58,6 +58,8 @@ def make_inserting_chunks(content, ):
             value = {
                 **dp,
                 "full_doc_id": doc_key,
+                "file_path": file_path,
+                "file_create_time": file_create_time,
             }
             inserting_chunks[key] = value
 
@@ -70,15 +72,9 @@ def embedding_chunks(chunks):
     """将文本chunk嵌入为向量"""
     list_data = []
     for chunk_id, chunk_data in chunks.items():
-        item = {
-            "__id__": chunk_id,
-            "content": chunk_data["content"],
-            "tokens": chunk_data["tokens"],
-            "chunk_order_index": chunk_data["chunk_order_index"],
-            "full_doc_id": chunk_data["full_doc_id"],
-            "__vector__": None,
-        }
-        list_data.append(item)
+        chunk_data["__id__"] = chunk_id
+        chunk_data["__vector__"] = None
+        list_data.append(chunk_data)
 
     contents = [v["content"] for v in list_data]
     batches = [
@@ -96,6 +92,7 @@ def embedding_chunks(chunks):
 
 
 if __name__ == "__main__":
+    """用来测试的程序"""
     with open('/home/qilixin/yangwei/teach/chatAI/loader/历史.txt', 'r') as f:
         content = f.read()
 

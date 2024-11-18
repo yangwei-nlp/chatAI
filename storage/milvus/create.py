@@ -22,12 +22,13 @@ def createCollection(collection_name):
     nlist = 128
 
     fields = [
-        FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=True),   # id自增
-        FieldSchema(name="chunkId", dtype=DataType.VARCHAR, max_length=100),           # 文本块id
-        FieldSchema(name="fileId", dtype=DataType.VARCHAR, max_length=100),            # 文件id
-        FieldSchema(name="fileName", dtype=DataType.VARCHAR, max_length=100),          # 文件名
-        FieldSchema(name="chunkText", dtype=DataType.VARCHAR, max_length=CHUNK_SIZE),  # 文本块的文本
-        FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=vector_dim),    # 文本块的嵌入向量
+        # FieldSchema(name="id", dtype=DataType.INT64),                                     # id自增
+        FieldSchema(name="chunkId", dtype=DataType.VARCHAR, is_primary=True, max_length=100),           # 文本块id
+        FieldSchema(name="chunkText", dtype=DataType.VARCHAR, max_length=CHUNK_SIZE),                   # 文本块的文本
+        FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=vector_dim),                     # 文本块的嵌入向量
+        FieldSchema(name="fileId", dtype=DataType.VARCHAR, max_length=100),                             # 文件id
+        FieldSchema(name="fileName", dtype=DataType.VARCHAR, max_length=500),                           # 文件名
+        FieldSchema(name="fileCreateDate", dtype=DataType.VARCHAR, max_length=50),                      # 文件创建时间
     ]
 
     schema = CollectionSchema(fields, collection_name)
@@ -51,9 +52,10 @@ if __name__ == "__main__":
         port=MILVUS_PORT,
     )
 
-    collection_name = "chunk_vdb"
-    if utility.has_collection(collection_name, using=COLLECTION_ALIAS):
-        collection = Collection(collection_name)
-        collection.load()
-    else:
-        collection = createCollection(collection_name)
+    # collection_name = ""
+    for collection_name in ['xiaosipindao', 'toujidana', 'jiaoganglaile']:
+        if utility.has_collection(collection_name, using=COLLECTION_ALIAS):
+            collection = Collection(collection_name)
+            collection.load()
+        else:
+            collection = createCollection(collection_name)

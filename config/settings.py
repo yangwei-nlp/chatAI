@@ -1,7 +1,12 @@
 CHUNK_SIZE = 4096
 COLLECTION_ALIAS = "chunk_collection"
 
-CHUNK_COLLECTION_NAME = "chunk_vdb"
+COLLECTION_NAME_LIST = [
+    "chunk_vdb",
+    "toujidana",
+    "xiaosipindao",
+    "jiaoganglaile",
+]
 
 EMBEDDING_BATCH_SIZE = 16
 

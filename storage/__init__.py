@@ -15,7 +15,10 @@ connections.connect(
     port=MILVUS_PORT
 )
 
-# 实体集合
-chunkCollection = Collection(CHUNK_COLLECTION_NAME, using=COLLECTION_ALIAS)
-chunkCollection.load()
+
+collection_dict = {}
+for collection_name in COLLECTION_NAME_LIST:
+    collection = Collection(collection_name, using=COLLECTION_ALIAS)
+    collection.load()
+    collection_dict[collection_name] = collection
 

@@ -1,4 +1,4 @@
-from storage import chunkCollection
+from storage import collection_dict
 from fastapi import APIRouter, File, UploadFile
 from chunk_text.embedding import ollama_embedding
 
@@ -8,7 +8,7 @@ search_router = APIRouter()
 
 
 @search_router.post("/search")
-def search(query):
+def search(query, collectionName):
     try:
         # 要进行KNN搜索的查询向量
         query_vector = ollama_embedding([query], embed_model="bge-m3", host="http://localhost:11434")
@@ -17,7 +17,8 @@ def search(query):
         partition_names = ["your_partition_name"]
 
         # 执行KNN搜索
-        results = chunkCollection.search(
+        collection = collection_dict.get(collectionName)
+        results = collection.search(
             data=query_vector,                                              # 查询数据
             anns_field="embedding",                                         # 向量字段名
             param={"metric_type": "L2", "params": {"nprobe": 10}},          # 搜索参数
