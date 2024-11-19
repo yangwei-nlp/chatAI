@@ -20,31 +20,31 @@ def chunk_func(fileInfos, milvusInfos):
     解析pdf、分块、嵌入、写入db
     TODO 针对文件去过滤
     """
-    # try:
-    file_path, all_text, file_create_date = fileInfos['file_path'], fileInfos['all_text'], fileInfos['file_create_date']
-    collectionName, partitionName = milvusInfos['collectionName'], milvusInfos['partitionName']
+    try:
+        file_path, all_text, file_create_date = fileInfos['file_path'], fileInfos['all_text'], fileInfos['file_create_date']
+        collectionName, partitionName = milvusInfos['collectionName'], milvusInfos['partitionName']
 
-    # 切割文本
-    chunks = make_inserting_chunks(all_text, file_path, file_create_date)
+        # 切割文本
+        chunks = make_inserting_chunks(all_text, file_path, file_create_date)
 
-    # 嵌入向量
-    embedding_data = embedding_chunks(chunks)
+        # 嵌入向量
+        embedding_data = embedding_chunks(chunks)
 
-    # 写入向量数据库
+        # 写入向量数据库
 
-    all_datas = {
-        'collectionName': collectionName,
-        'partitionName': partitionName,
-        'data': embedding_data,
-    }
+        all_datas = {
+            'collectionName': collectionName,
+            'partitionName': partitionName,
+            'data': embedding_data,
+        }
 
-    insert_vdb(all_datas)
-    del fileInfos['all_text']
-    print(f"存储成功，信息：{fileInfos}, {milvusInfos}")
+        insert_vdb(all_datas)
+        del fileInfos['all_text']
+        print(f"存储成功，信息：{fileInfos}, {milvusInfos}")
 
-    # except Exception as e:
-    #     del fileInfos['all_text']
-    #     print(f"存储失败，信息：{fileInfos}, {milvusInfos}，失败原因：{e}")
+    except Exception as e:
+        del fileInfos['all_text']
+        print(f"存储失败，信息：{fileInfos}, {milvusInfos}，失败原因：{e}")
 
 
 
