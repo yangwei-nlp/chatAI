@@ -7,15 +7,15 @@ PROMPTS["DEFAULT_RECORD_DELIMITER"] = "##"
 PROMPTS["DEFAULT_COMPLETION_DELIMITER"] = "<|COMPLETE|>"
 PROMPTS["process_tickers"] = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 
-PROMPTS["DEFAULT_ENTITY_TYPES"] = ["organization", "person", "geo", "event"]
+PROMPTS["DEFAULT_ENTITY_TYPES"] = ["概念", "人物", "金融名词", "经济学名词", "时间", "事件"]
 
 PROMPTS["entity_extraction"] = """-目标-
 给定可能与此活动相关的文本文档和实体类型列表，从文本中识别这些类型的所有实体以及已识别实体之间的所有关系。
 
 -步骤-
 1. 识别所有实体。对于每个已识别的实体，提取以下信息：
-- entity_name: 实体名称，大写
-- entity_type: 以下类型之一：[{entity_types}]
+- entity_name: 实体名称
+- entity_type: 以下实体类型之一：[{entity_types}]
 - entity_description: 实体属性和活动的综合描述
 将每个实体格式化为 ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>
 
@@ -40,17 +40,11 @@ PROMPTS["entity_extraction"] = """-目标-
 ######################
 例子1:
 
-Entity_types: [人物, 金融名词, 经济学名词, 时间]
-Text:
-while Alex clenched his jaw, the buzz of frustration dull against the backdrop of Taylor's authoritarian certainty. It was this competitive undercurrent that kept him alert, the sense that his and Jordan's shared commitment to discovery was an unspoken rebellion against Cruz's narrowing vision of control and order.
+实体类型: [概念, 人物, 金融名词, 经济学名词, 时间, 事件]
+文本:
 
-Then Taylor did something unexpected. They paused beside Jordan and, for a moment, observed the device with something akin to reverence. “If this tech can be understood..." Taylor said, their voice quieter, "It could change the game for us. For all of us.”
-
-The underlying dismissal earlier seemed to falter, replaced by a glimpse of reluctant respect for the gravity of what lay in their hands. Jordan looked up, and for a fleeting heartbeat, their eyes locked with Taylor's, a wordless clash of wills softening into an uneasy truce.
-
-It was a small transformation, barely perceptible, but one that Alex noted with an inward nod. They had all been brought here by different paths
 ################
-Output:
+输出:
 ("entity"{tuple_delimiter}"Alex"{tuple_delimiter}"person"{tuple_delimiter}"Alex is a character who experiences frustration and is observant of the dynamics among other characters."){record_delimiter}
 ("entity"{tuple_delimiter}"Taylor"{tuple_delimiter}"person"{tuple_delimiter}"Taylor is portrayed with authoritarian certainty and shows a moment of reverence towards a device, indicating a change in perspective."){record_delimiter}
 ("entity"{tuple_delimiter}"Jordan"{tuple_delimiter}"person"{tuple_delimiter}"Jordan shares a commitment to discovery and has a significant interaction with Taylor regarding a device."){record_delimiter}
@@ -222,10 +216,10 @@ Output:
 
 """
 
-PROMPTS["naive_rag_response"] = """你是一个乐于帮助的助手，下面是你知道的信息:
+PROMPTS["naive_rag_response"] = """你是一个乐于助人的助手，下面是你知道的信息:
 {content_data}
 ---
-如果你不知道答案，或者所提供的知识不包含足够的信息来提供答案，就直接说出来。不要编造任何东西。生成目标长度和格式的响应，以响应用户的问题，总结输入数据表中适合于响应长度和格式的所有信息，并纳入任何相关的一般知识。如果你不知道答案，就直接说出来。不要编造任何东西。不包括没有提供支持证据的信息。
+如果提供的知识不包含足够的信息来提供答案，就直接说"已有信息无法让我做出回答。"，千万不要编造任何东西。
 ---目标响应的长度和格式---
 {response_type}
 """

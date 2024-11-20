@@ -1,7 +1,7 @@
 """
 各种query方法
 """
-from llm.generate import ollama_model_complete
+from llm.vllm_llm import async_query_openai
 from llm.prompt import PROMPTS
 from llm.utils import truncate_list_by_token_size
 
@@ -21,7 +21,7 @@ async def naive_query(query_text, chunks):
     sys_prompt = sys_prompt_temp.format(
         content_data=section, response_type="Multiple Paragraphs"
     )
-    response = await ollama_model_complete(
+    response = await async_query_openai(
         query_text,
         system_prompt=sys_prompt,
     )

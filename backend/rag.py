@@ -20,11 +20,13 @@ async def naive_rag(query, collectionName):
         results = collection.search(
             data=query_vector,                                              # 查询数据
             anns_field="embedding",                                         # 向量字段名
-            param={"metric_type": "L2", "params": {"nprobe": 10}},          # 搜索参数
+            param={"metric_type": "IP", "params": {"nprobe": 10}},          # 搜索参数
             limit=10,                                                       # 返回前10个结果
             # partition_names=partition_names                               # 指定分区
             output_fields=['chunkId', 'fileId', 'fileName', 'chunkText'],   # 返回字段
         )
+
+        assert len(results[0]) == 10
 
         # 整理召回的文档
         rag_chunks = []

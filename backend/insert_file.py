@@ -1,10 +1,12 @@
 """
 读取本地文件然后嵌入向量并存储到数据库
 """
+import asyncio
 import os.path
 
 from chunk_text.chunk_by_length import make_inserting_chunks, embedding_chunks
 from chunk_text.embedding import ollama_embedding
+from kg.entity_extract import extract_entities
 from loader.docx_loader import read_docx
 from loader.ocr_pdf_loader import read_pdf
 from insert.chunk_vdb_insert import insert_vdb
@@ -15,7 +17,7 @@ from fastapi import APIRouter, File, UploadFile
 insert_router = APIRouter()
 
 
-def chunk_func(fileInfos, milvusInfos):
+async def chunk_func(fileInfos, milvusInfos):
     """
     解析pdf、分块、嵌入、写入db
     TODO 针对文件去过滤
@@ -26,6 +28,9 @@ def chunk_func(fileInfos, milvusInfos):
 
         # 切割文本
         chunks = make_inserting_chunks(all_text, file_path, file_create_date)
+
+        # 抽取实体和关系
+        # entities, relations = await extract_entities(chunks)
 
         # 嵌入向量
         embedding_data = embedding_chunks(chunks)
@@ -69,7 +74,7 @@ def parse_file_path(file_path):
 
 
 
-def chunk_local_dir(dir):
+async def chunk_local_dir(dir):
     """
     读取文件夹下的所有文件
     得到 集合、分区
@@ -95,7 +100,7 @@ def chunk_local_dir(dir):
                         "collectionName": collectionName,
                         "partitionName": partitionName,
                     }
-                    chunk_func(fileInfos, milvusInfos)
+                    await chunk_func(fileInfos, milvusInfos)
                 else:
                     continue
 
@@ -154,4 +159,7 @@ if __name__ == "__main__":
     # chunk_func(fileInfos, milvusInfos)
 
     dir = "/mnt/data/抖音股市直播/"
-    chunk_local_dir(dir)
+    loop = asyncio.get_event_loop()
+    result = loop.run_until_complete(chunk_local_dir(dir))
+    loop.close()
+

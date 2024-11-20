@@ -18,11 +18,10 @@ from config.settings import *
 def createCollection(collection_name):
     vector_dim = 1024
     index_type = "IVF_FLAT"
-    metric = "L2"
+    metric = "IP"
     nlist = 128
 
     fields = [
-        # FieldSchema(name="id", dtype=DataType.INT64),                                     # id自增
         FieldSchema(name="chunkId", dtype=DataType.VARCHAR, is_primary=True, max_length=100),           # 文本块id
         FieldSchema(name="chunkText", dtype=DataType.VARCHAR, max_length=CHUNK_SIZE),                   # 文本块的文本
         FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=vector_dim),                     # 文本块的嵌入向量
