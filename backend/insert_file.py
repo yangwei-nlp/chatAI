@@ -30,7 +30,7 @@ async def chunk_func(fileInfos, milvusInfos):
         chunks = make_inserting_chunks(all_text, file_path, file_create_date)
 
         # 抽取实体和关系
-        # entities, relations = await extract_entities(chunks)
+        entities, relations = await extract_entities(chunks)
 
         # 嵌入向量
         embedding_data = embedding_chunks(chunks)

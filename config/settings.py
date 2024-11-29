@@ -25,5 +25,10 @@ OLLAMA_HOST = "http://localhost:11434"
 OLLAMA_MODEL = "qwen2.5:7b-instruct"
 
 # vllm信息
-VLLM_HOST = "http://120.220.247.120:8010/v1"
-VLLM_MODEL = "/nvme1/code/yangwei/Qwen/Qwen2___5-72B-Instruct/"
+API_HOST = "http://120.220.247.120:8010/v1"
+API_MODEL = "/nvme1/code/yangwei/Qwen/Qwen2___5-72B-Instruct/"
+API_KEY = "EMPTY"
+
+# API_HOST = "https://free.v36.cm/v1/"
+# API_MODEL = "gpt-4o-mini"
+# API_KEY = "sk-aQk2NXA3WdNEKWnm76CfD6B12e8e4cD89dA9C07fCeD12fAb"

@@ -1,12 +1,12 @@
 import time
 import asyncio
 from openai import AsyncOpenAI
-from config.settings import VLLM_HOST, VLLM_MODEL
+from config.settings import API_HOST, API_MODEL, API_KEY
 
 
 aclient = AsyncOpenAI(
-    base_url=VLLM_HOST,
-    api_key="EMPTY"
+    base_url=API_HOST,
+    api_key=API_KEY
 )
 
 
@@ -22,7 +22,7 @@ async def async_query_openai(prompt, system_prompt=None, history_messages=[], **
     messages.extend(history_messages)
     messages.append({"role": "user", "content": prompt})
     completion = await aclient.chat.completions.create(
-        model=VLLM_MODEL,
+        model=API_MODEL,
         messages=messages,
         temperature=temperature,
         top_p=top_p,

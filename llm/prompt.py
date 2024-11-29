@@ -35,79 +35,46 @@ PROMPTS["entity_extraction"] = """-目标-
 
 5. 完成后，输出{completion_delimiter}
 
-######################
 -例子-
-######################
 例子1:
 
 实体类型: [概念, 人物, 金融名词, 经济学名词, 时间, 事件]
-文本:
+文本: 大哥聊了说为什么每次事件出来之后，先都是题材先涨，然后就大盘再涨？大哥你这个总结，我觉得可能就有点问题。为什么叫总结就有点问题呢？什么叫每次出来事儿之后先涨题材再涨大盘，难道每一次都是这样的吗？其实大哥表达的意思很清楚，你看我们看到无论是这个什么样的利好的驱动，对吧？这种利好驱动之后，我们往往看到一些可能小市值品种先涨，然后是大市值品种先涨，是不是这个意思吧？刚刚大哥是不是说的这个意思，或者说我不知道其他的大哥有没有这样的感受，其他的大哥你们怎么看，对吧？
+总觉得说一般的事件往往会引发一些小市值品种先涨。实际上你这个先后的这个结论就错了，为什么讲错了呢？或者叫你表达错了。事实上我们看就是事件驱动某一个产业性的利好，它不是说单有题材或者纤长，而是说小市值的涨幅要相较于大市值品种的涨幅大一些，没有先后，是这样的表达吗？
+各位，所以刚刚大哥说的那为什么小市值先涨没有先后？同样的事件，同样的影响，同样的反应，只不过它的幅度体现上就不一样。这里头就有一个核心的因素，核心的因素有几点，一定要注意一个问题。
+小市值品种我们讲它有两个特征。一本来它的市值就相对比较小。二小市值品种大部分就是你去看它上市时间不是特别的长，对吧？那跟一些权重相比较来讲，它可能上市时间相对比较短，就是它实际流通的股数又相对会比较少。所以在这种背景之下，同样的事件，同样的影响，就即便小市值品种它分配到的一些资金相对较少，但是它对应流通市值就小。
+所以在这种背景之下，就我们看到的大部分的事件驱动性的一些？上涨你看到的大部分都是什么小市值涨的幅度要比大市值？这是必然的。所以你看为什么我们很多个人投资者就更喜欢做一些小市值的，为什么更喜欢做一些这种？对吧，就比如说我同一个行业，我就选择一个小市值，就是图快或者是幅度大。你为什么这么做，你还不清楚吗？是不是这道理？所以这个没有先后，我们讲事件驱动背景之下没有先后，只不过说你看起来幅度大小不一样罢了。
+但是这里头也有一个问题，也有一个什么问题？你说的这种现象也不普遍。为什么叫你说的这种现象也不普遍呢？就是你可以看看什么。比如说前一段时间我们跟各位汇报的时候，聊到了一个问题，就是你看科创板对吧？在涨的这个过程当中，你会发现尤其是芯片这个行业。
+你看在涨的这个过程当中，是不是头部的芯片企业涨得更好，而相对我们讲，小市值的芯片企业反而反应比较弱一些，是这样的吗？各位还记得前一段时间这个芯片对吧？就芯片这条产业链你看涨的都是哪些？中心这个叫什么来着？韩寒季捂还是5G是吧？
+对，所以你看就是你这个观察是我们很多投资者都是这样的，我们习惯性的根据自己的感觉就下结论。所以这种时候你这种感觉就错。然后你再基于这种感觉去分析或者是判断，那就更错了。所以从感觉或者说从你在提出这个问题的时候，你先要评价一下你这个问题到底有没有？有偏差，有偏差你就不用再往下分析了，对吧？
+不是所有的都是大市值不行，小市值行的问题。在我们大部分投资者概念里头，就是大市值品种就是涨得慢。但是各位就拿现在就拿A股现在的情况上来讲，各位就拿A股现在的情况来讲，就是你现在觉得你现在还有这种大市值品种，就是涨得慢的这个印象或者是这个看法吗？
 
-################
 输出:
-("entity"{tuple_delimiter}"Alex"{tuple_delimiter}"person"{tuple_delimiter}"Alex is a character who experiences frustration and is observant of the dynamics among other characters."){record_delimiter}
-("entity"{tuple_delimiter}"Taylor"{tuple_delimiter}"person"{tuple_delimiter}"Taylor is portrayed with authoritarian certainty and shows a moment of reverence towards a device, indicating a change in perspective."){record_delimiter}
-("entity"{tuple_delimiter}"Jordan"{tuple_delimiter}"person"{tuple_delimiter}"Jordan shares a commitment to discovery and has a significant interaction with Taylor regarding a device."){record_delimiter}
-("entity"{tuple_delimiter}"Cruz"{tuple_delimiter}"person"{tuple_delimiter}"Cruz is associated with a vision of control and order, influencing the dynamics among other characters."){record_delimiter}
-("entity"{tuple_delimiter}"The Device"{tuple_delimiter}"technology"{tuple_delimiter}"The Device is central to the story, with potential game-changing implications, and is revered by Taylor."){record_delimiter}
-("relationship"{tuple_delimiter}"Alex"{tuple_delimiter}"Taylor"{tuple_delimiter}"Alex is affected by Taylor's authoritarian certainty and observes changes in Taylor's attitude towards the device."{tuple_delimiter}"power dynamics, perspective shift"{tuple_delimiter}7){record_delimiter}
-("relationship"{tuple_delimiter}"Alex"{tuple_delimiter}"Jordan"{tuple_delimiter}"Alex and Jordan share a commitment to discovery, which contrasts with Cruz's vision."{tuple_delimiter}"shared goals, rebellion"{tuple_delimiter}6){record_delimiter}
-("relationship"{tuple_delimiter}"Taylor"{tuple_delimiter}"Jordan"{tuple_delimiter}"Taylor and Jordan interact directly regarding the device, leading to a moment of mutual respect and an uneasy truce."{tuple_delimiter}"conflict resolution, mutual respect"{tuple_delimiter}8){record_delimiter}
-("relationship"{tuple_delimiter}"Jordan"{tuple_delimiter}"Cruz"{tuple_delimiter}"Jordan's commitment to discovery is in rebellion against Cruz's vision of control and order."{tuple_delimiter}"ideological conflict, rebellion"{tuple_delimiter}5){record_delimiter}
-("relationship"{tuple_delimiter}"Taylor"{tuple_delimiter}"The Device"{tuple_delimiter}"Taylor shows reverence towards the device, indicating its importance and potential impact."{tuple_delimiter}"reverence, technological significance"{tuple_delimiter}9){record_delimiter}
-("content_keywords"{tuple_delimiter}"power dynamics, ideological conflict, discovery, rebellion"){completion_delimiter}
-#############################
-Example 2:
+("entity"{tuple_delimiter}"小市值品种"{tuple_delimiter}"概念"{tuple_delimiter}"市值较低的股票，通常波动较大，涨幅相对显著。"){record_delimiter}
+("entity"{tuple_delimiter}"大市值品种"{tuple_delimiter}"概念"{tuple_delimiter}"市值较高的股票，通常波动较小，涨幅较平稳。"){record_delimiter}
+("entity"{tuple_delimiter}"事件驱动"{tuple_delimiter}"概念"{tuple_delimiter}"特定事件对市场或行业的触发作用，可能引发股票波动。"){record_delimiter}
+("entity"{tuple_delimiter}"利好驱动"{tuple_delimiter}"概念"{tuple_delimiter}"利好消息推动市场或个股上涨的现象。"){record_delimiter}
+("entity"{tuple_delimiter}"涨幅"{tuple_delimiter}"概念"{tuple_delimiter}"股票或指数价格在一定时间内的增长幅度。"){record_delimiter}
+("entity"{tuple_delimiter}"核心因素"{tuple_delimiter}"概念"{tuple_delimiter}"对现象或问题产生关键影响的原因。"){record_delimiter}
+("entity"{tuple_delimiter}"流通市值"{tuple_delimiter}"概念"{tuple_delimiter}"某股票在市场中可自由交易的股份价值总和。"){record_delimiter}
+("entity"{tuple_delimiter}"芯片产业链"{tuple_delimiter}"概念"{tuple_delimiter}"芯片行业上下游的相关企业和生态系统。"){record_delimiter}
+("entity"{tuple_delimiter}"市值"{tuple_delimiter}"金融名词"{tuple_delimiter}"公司股票在市场上的总价值，等于股价乘以总股本。"){record_delimiter}
+("entity"{tuple_delimiter}"权重"{tuple_delimiter}"金融名词"{tuple_delimiter}"某股票在指数或投资组合中的影响力。"){record_delimiter}
+("entity"{tuple_delimiter}"流通股数"{tuple_delimiter}"金融名词"{tuple_delimiter}"股票市场中可自由买卖的股份数量。"){record_delimiter}
+("entity"{tuple_delimiter}"科创板"{tuple_delimiter}"金融名词"{tuple_delimiter}"中国资本市场中针对科技创新企业设立的板块。"){record_delimiter}
+("entity"{tuple_delimiter}"产业性利好"{tuple_delimiter}"经济学名词"{tuple_delimiter}"对某行业整体有积极促进作用的政策、事件或趋势。"){record_delimiter}
+("relationship"{tuple_delimiter}"小市值品种"{tuple_delimiter}"大市值品种"{tuple_delimiter}"小市值品种与大市值品种在市场表现上有所不同，小市值品种涨幅通常大于大市值品种，但两者涨跌幅没有明确的先后顺序。"{tuple_delimiter}"小市值, 大市值, 涨幅对比, 先后顺序, 市场表现"{tuple_delimiter}7){record_delimiter}
+("relationship"{tuple_delimiter}"事件驱动"{tuple_delimiter}"利好驱动"{tuple_delimiter}"事件驱动往往伴随着利好驱动，这种利好消息可能影响市场整体，也可能集中作用于某些行业或股票类型。"{tuple_delimiter}"事件驱动, 利好消息, 市场反应, 股票波动, 影响范围"{tuple_delimiter}){record_delimiter}
+("relationship"{tuple_delimiter}"核心因素"{tuple_delimiter}"涨幅"{tuple_delimiter}"涨幅的大小受核心因素的影响，例如市值规模、流通股数等。"{tuple_delimiter}"核心因素, 涨幅差异, 资金分配, 市值规模, 投资偏好"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"流通市值"{tuple_delimiter}"投资者概念"{tuple_delimiter}"投资者通常倾向于选择流通市值小的品种，因为这些品种在事件驱动下涨幅较大。"{tuple_delimiter}"流通市值, 投资者偏好, 市场流动性, 投资选择, 股票偏好"{tuple_delimiter}){record_delimiter}
+("relationship"{tuple_delimiter}"芯片产业链"{tuple_delimiter}"科创板"{tuple_delimiter}"科创板中芯片产业链企业的表现，可能体现为头部企业与小市值企业的不同涨幅。"{tuple_delimiter}"芯片产业链, 科创板, 行业表现, 头部企业, 市场影响"{tuple_delimiter}){record_delimiter}
+("relationship"{tuple_delimiter}"A股"{tuple_delimiter}"权重"{tuple_delimiter}"A股市场中，权重较大的大市值股票可能涨幅较慢，但具有稳定性。"{tuple_delimiter}"A股, 权重, 市场波动, 股票影响力, 投资策略"{tuple_delimiter}){record_delimiter}
+("content_keywords"{tuple_delimiter}"小市值品种, 大市值品种, 事件驱动, 芯片产业链, 科创板, 涨幅"){completion_delimiter}
 
-Entity_types: [person, technology, mission, organization, location]
-Text:
-They were no longer mere operatives; they had become guardians of a threshold, keepers of a message from a realm beyond stars and stripes. This elevation in their mission could not be shackled by regulations and established protocols—it demanded a new perspective, a new resolve.
-
-Tension threaded through the dialogue of beeps and static as communications with Washington buzzed in the background. The team stood, a portentous air enveloping them. It was clear that the decisions they made in the ensuing hours could redefine humanity's place in the cosmos or condemn them to ignorance and potential peril.
-
-Their connection to the stars solidified, the group moved to address the crystallizing warning, shifting from passive recipients to active participants. Mercer's latter instincts gained precedence— the team's mandate had evolved, no longer solely to observe and report but to interact and prepare. A metamorphosis had begun, and Operation: Dulce hummed with the newfound frequency of their daring, a tone set not by the earthly
-#############
-Output:
-("entity"{tuple_delimiter}"Washington"{tuple_delimiter}"location"{tuple_delimiter}"Washington is a location where communications are being received, indicating its importance in the decision-making process."){record_delimiter}
-("entity"{tuple_delimiter}"Operation: Dulce"{tuple_delimiter}"mission"{tuple_delimiter}"Operation: Dulce is described as a mission that has evolved to interact and prepare, indicating a significant shift in objectives and activities."){record_delimiter}
-("entity"{tuple_delimiter}"The team"{tuple_delimiter}"organization"{tuple_delimiter}"The team is portrayed as a group of individuals who have transitioned from passive observers to active participants in a mission, showing a dynamic change in their role."){record_delimiter}
-("relationship"{tuple_delimiter}"The team"{tuple_delimiter}"Washington"{tuple_delimiter}"The team receives communications from Washington, which influences their decision-making process."{tuple_delimiter}"decision-making, external influence"{tuple_delimiter}7){record_delimiter}
-("relationship"{tuple_delimiter}"The team"{tuple_delimiter}"Operation: Dulce"{tuple_delimiter}"The team is directly involved in Operation: Dulce, executing its evolved objectives and activities."{tuple_delimiter}"mission evolution, active participation"{tuple_delimiter}9){completion_delimiter}
-("content_keywords"{tuple_delimiter}"mission evolution, decision-making, active participation, cosmic significance"){completion_delimiter}
-#############################
-Example 3:
-
-Entity_types: [person, role, technology, organization, event, location, concept]
-Text:
-their voice slicing through the buzz of activity. "Control may be an illusion when facing an intelligence that literally writes its own rules," they stated stoically, casting a watchful eye over the flurry of data.
-
-"It's like it's learning to communicate," offered Sam Rivera from a nearby interface, their youthful energy boding a mix of awe and anxiety. "This gives talking to strangers' a whole new meaning."
-
-Alex surveyed his team—each face a study in concentration, determination, and not a small measure of trepidation. "This might well be our first contact," he acknowledged, "And we need to be ready for whatever answers back."
-
-Together, they stood on the edge of the unknown, forging humanity's response to a message from the heavens. The ensuing silence was palpable—a collective introspection about their role in this grand cosmic play, one that could rewrite human history.
-
-The encrypted dialogue continued to unfold, its intricate patterns showing an almost uncanny anticipation
-#############
-Output:
-("entity"{tuple_delimiter}"Sam Rivera"{tuple_delimiter}"person"{tuple_delimiter}"Sam Rivera is a member of a team working on communicating with an unknown intelligence, showing a mix of awe and anxiety."){record_delimiter}
-("entity"{tuple_delimiter}"Alex"{tuple_delimiter}"person"{tuple_delimiter}"Alex is the leader of a team attempting first contact with an unknown intelligence, acknowledging the significance of their task."){record_delimiter}
-("entity"{tuple_delimiter}"Control"{tuple_delimiter}"concept"{tuple_delimiter}"Control refers to the ability to manage or govern, which is challenged by an intelligence that writes its own rules."){record_delimiter}
-("entity"{tuple_delimiter}"Intelligence"{tuple_delimiter}"concept"{tuple_delimiter}"Intelligence here refers to an unknown entity capable of writing its own rules and learning to communicate."){record_delimiter}
-("entity"{tuple_delimiter}"First Contact"{tuple_delimiter}"event"{tuple_delimiter}"First Contact is the potential initial communication between humanity and an unknown intelligence."){record_delimiter}
-("entity"{tuple_delimiter}"Humanity's Response"{tuple_delimiter}"event"{tuple_delimiter}"Humanity's Response is the collective action taken by Alex's team in response to a message from an unknown intelligence."){record_delimiter}
-("relationship"{tuple_delimiter}"Sam Rivera"{tuple_delimiter}"Intelligence"{tuple_delimiter}"Sam Rivera is directly involved in the process of learning to communicate with the unknown intelligence."{tuple_delimiter}"communication, learning process"{tuple_delimiter}9){record_delimiter}
-("relationship"{tuple_delimiter}"Alex"{tuple_delimiter}"First Contact"{tuple_delimiter}"Alex leads the team that might be making the First Contact with the unknown intelligence."{tuple_delimiter}"leadership, exploration"{tuple_delimiter}10){record_delimiter}
-("relationship"{tuple_delimiter}"Alex"{tuple_delimiter}"Humanity's Response"{tuple_delimiter}"Alex and his team are the key figures in Humanity's Response to the unknown intelligence."{tuple_delimiter}"collective action, cosmic significance"{tuple_delimiter}8){record_delimiter}
-("relationship"{tuple_delimiter}"Control"{tuple_delimiter}"Intelligence"{tuple_delimiter}"The concept of Control is challenged by the Intelligence that writes its own rules."{tuple_delimiter}"power dynamics, autonomy"{tuple_delimiter}7){record_delimiter}
-("content_keywords"{tuple_delimiter}"first contact, control, communication, cosmic significance"){completion_delimiter}
-#############################
--Real Data-
-######################
-Entity_types: {entity_types}
-Text: {input_text}
-######################
-Output:
+-真实数据-
+实体类型: {entity_types}
+文本: {input_text}
+输出:
 """
 
 PROMPTS[
@@ -128,13 +95,11 @@ Output:
 
 PROMPTS[
     "entiti_continue_extraction"
-] = """MANY entities were missed in the last extraction.  Add them below using the same format:
-"""
+] = """在上次提取中很多实体或实体间的关系被遗漏了，请在下面添加并以相同格式返回"""
 
 PROMPTS[
     "entiti_if_loop_extraction"
-] = """It appears some entities may have still been missed.  Answer YES | NO if there are still entities that need to be added.
-"""
+] = """好像还是有一些实体或实体间的关系被遗漏了，请回答"是"或"否"来告知我是否还有实体或实体间的关系需要被添加。"""
 
 PROMPTS["fail_response"] = "不好意思，我没有能力回答这个问题。"
 
